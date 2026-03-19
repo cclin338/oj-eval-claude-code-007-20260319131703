@@ -140,13 +140,28 @@ public:
 
     int getNextLineNumber(int lineNumber);
 
-    //more func to add
-    //todo
+/*
+ * Method: listAllLines
+ * Usage: program.listAllLines();
+ * -------------------------------
+ * Lists all lines in the program in ascending order by line number.
+ */
+
+    void listAllLines();
 
 private:
 
-    // Fill this in with whatever types and instance variables you need
-    //todo
+    // Structure to hold line information
+    struct LineInfo {
+        std::string sourceLine;
+        Statement* parsedStatement;
+
+        LineInfo() : parsedStatement(nullptr) {}
+        LineInfo(const std::string& line) : sourceLine(line), parsedStatement(nullptr) {}
+    };
+
+    // Map to store lines by line number (automatically keeps them sorted)
+    std::map<int, LineInfo> lines;
 };
 
 #endif

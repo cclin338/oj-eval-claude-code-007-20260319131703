@@ -14,7 +14,7 @@
 
 /* Implementation of the EvalState class */
 
-EvalState::EvalState() {
+EvalState::EvalState() : currentLine(-1), jumpRequested(false), jumpTarget(-1) {
     /* Empty */
 }
 
@@ -36,6 +36,32 @@ bool EvalState::isDefined(std::string var) {
     return symbolTable.find(var)!=symbolTable.end();
 }
 
-void EvalState::Clear() {
+void EvalState::clear() {
     symbolTable.clear();
+    currentLine = -1;
+    jumpRequested = false;
+    jumpTarget = -1;
+}
+
+void EvalState::setCurrentLine(int lineNumber) {
+    if (lineNumber >= 0) {
+        jumpRequested = true;
+        jumpTarget = lineNumber;
+    } else {
+        jumpRequested = false;
+        jumpTarget = -1;
+    }
+}
+
+int EvalState::getCurrentLine() const {
+    return jumpRequested ? jumpTarget : currentLine;
+}
+
+bool EvalState::isJumpRequested() const {
+    return jumpRequested;
+}
+
+void EvalState::clearJump() {
+    jumpRequested = false;
+    jumpTarget = -1;
 }

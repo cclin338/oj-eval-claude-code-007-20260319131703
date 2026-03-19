@@ -85,4 +85,113 @@ public:
  * specify its own destructor method to free that memory.
  */
 
+/*
+ * Class: RemStatement
+ * -------------------
+ * This class represents a REM (comment) statement.
+ */
+
+class RemStatement : public Statement {
+public:
+    RemStatement(const std::string& comment);
+    void execute(EvalState &state, Program &program) override;
+
+private:
+    std::string comment;
+};
+
+/*
+ * Class: LetStatement
+ * -------------------
+ * This class represents a LET statement for variable assignment.
+ */
+
+class LetStatement : public Statement {
+public:
+    LetStatement(const std::string& var, Expression *exp);
+    ~LetStatement();
+    void execute(EvalState &state, Program &program) override;
+
+private:
+    std::string variable;
+    Expression *expression;
+};
+
+/*
+ * Class: PrintStatement
+ * ---------------------
+ * This class represents a PRINT statement.
+ */
+
+class PrintStatement : public Statement {
+public:
+    PrintStatement(Expression *exp);
+    ~PrintStatement();
+    void execute(EvalState &state, Program &program) override;
+
+private:
+    Expression *expression;
+};
+
+/*
+ * Class: InputStatement
+ * ---------------------
+ * This class represents an INPUT statement.
+ */
+
+class InputStatement : public Statement {
+public:
+    InputStatement(const std::string& var);
+    void execute(EvalState &state, Program &program) override;
+
+private:
+    std::string variable;
+};
+
+/*
+ * Class: EndStatement
+ * -------------------
+ * This class represents an END statement.
+ */
+
+class EndStatement : public Statement {
+public:
+    EndStatement();
+    void execute(EvalState &state, Program &program) override;
+};
+
+/*
+ * Class: GotoStatement
+ * --------------------
+ * This class represents a GOTO statement.
+ */
+
+class GotoStatement : public Statement {
+public:
+    GotoStatement(int lineNum);
+    void execute(EvalState &state, Program &program) override;
+
+private:
+    int targetLine;
+};
+
+/*
+ * Class: IfStatement
+ * ------------------
+ * This class represents an IF-THEN statement.
+ */
+
+class IfStatement : public Statement {
+public:
+    IfStatement(Expression *exp1, const std::string& op, Expression *exp2, int lineNum);
+    ~IfStatement();
+    void execute(EvalState &state, Program &program) override;
+
+private:
+    Expression *expr1;
+    Expression *expr2;
+    std::string operation;
+    int targetLine;
+};
+
 #endif

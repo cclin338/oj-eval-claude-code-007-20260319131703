@@ -73,11 +73,50 @@ public:
 
     bool isDefined(std::string var);
 
-    void Clear();
+    void clear();
+
+/*
+ * Method: setCurrentLine
+ * Usage: state.setCurrentLine(lineNumber);
+ * -----------------------------------------
+ * Sets the current line number for program execution.
+ */
+
+    void setCurrentLine(int lineNumber);
+
+/*
+ * Method: getCurrentLine
+ * Usage: int line = state.getCurrentLine();
+ * ------------------------------------------
+ * Gets the current line number for program execution.
+ */
+
+    int getCurrentLine() const;
+
+/*
+ * Method: isJumpRequested
+ * Usage: if (state.isJumpRequested()) ...
+ * ---------------------------------------
+ * Returns true if a jump to a specific line has been requested.
+ */
+
+    bool isJumpRequested() const;
+
+/*
+ * Method: clearJump
+ * Usage: state.clearJump();
+ * --------------------------
+ * Clears the jump request flag.
+ */
+
+    void clearJump();
 
 private:
 
     std::map<std::string, int> symbolTable;
+    int currentLine;
+    bool jumpRequested;
+    int jumpTarget;
 
 };
 
